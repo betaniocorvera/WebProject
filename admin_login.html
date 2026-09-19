@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — OCRS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #16213e; --teal: #0f7b6c; --teal-lt: #1aad99;
+      --gold: #d4a017; --cream: #f5f0e8; --ink: #1a1a2e;
+      --red: #8b1a1a; --rule: rgba(26,26,46,.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      background:
+        repeating-linear-gradient(transparent,transparent 39px,rgba(15,123,108,.13) 39px,rgba(15,123,108,.13) 40px),
+        linear-gradient(160deg,#1a1a2e 0%,#16213e 55%,#0f3460 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      background: #fff;
+      border-radius: 2px;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.35), 6px 6px 0 rgba(212,160,23,.25);
+      overflow: hidden;
+    }
+
+    .login-header {
+      background: var(--navy);
+      padding: 28px 36px;
+    }
+    .login-header .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem; letter-spacing: .22em;
+      color: var(--teal-lt); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .login-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: #fff; font-weight: 700;
+    }
+    .login-header .sub {
+      font-size: .8rem; color: rgba(255,255,255,.4);
+      margin-top: 4px; font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .1em;
+    }
+
+    .login-body { padding: 36px; }
+
+    .flash-msg {
+      background: rgba(139,26,26,.08);
+      border-left: 3px solid var(--red);
+      padding: 10px 14px; margin-bottom: 24px;
+      font-size: .85rem; color: var(--red);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .field { margin-bottom: 24px; }
+    label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; letter-spacing: .18em;
+      color: var(--teal); text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%; border: none;
+      border-bottom: 1.5px solid var(--rule);
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; color: var(--ink);
+      padding: 8px 0; outline: none;
+      transition: border-color .2s;
+    }
+    input:focus { border-bottom-color: var(--teal); }
+
+    .btn-login {
+      display: block; width: 100%;
+      background: var(--navy); color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem; font-weight: 500;
+      padding: 14px; border: none;
+      border-radius: 2px; cursor: pointer;
+      transition: background .2s;
+      letter-spacing: .04em;
+    }
+    .btn-login:hover { background: var(--teal); }
+
+    .back-link {
+      display: block; text-align: center;
+      margin-top: 16px; font-size: .8rem;
+      color: rgba(26,26,46,.45); text-decoration: none;
+    }
+    .back-link:hover { color: var(--teal); }
+
+    .hint {
+      margin-top: 28px; padding-top: 20px;
+      border-top: 1px solid var(--rule);
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem; color: rgba(26,26,46,.35);
+      line-height: 1.8; letter-spacing: .05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-header">
+      <div class="eyebrow">Admin Access</div>
+      <h1>Logbook Control Panel</h1>
+      <div class="sub">Online Conference Registration System</div>
+    </div>
+    <div class="login-body">
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-msg">{{ messages[0] }}</div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="/admin/login">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter admin username" required autofocus />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter password" required />
+        </div>
+        <button type="submit" class="btn-login">Access Dashboard</button>
+      </form>
+
+      <a href="/" class="back-link">← Back to Registration</a>
+
+      <div class="hint">
+        Default credentials<br />
+        Username: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>ocrs2025</strong><br />
+        Change these in app.py before deploying.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
